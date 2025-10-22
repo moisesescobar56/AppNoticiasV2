@@ -11,3 +11,26 @@ export default function NewScreen({ navigation }){
         </Layout>
     );
 }
+
+const styles = StyleSheet.create({
+  card: {
+    padding: 10,
+    borderWidth: 2,
+    borderColor: "#ddd",
+    borderRadius: 10,
+    marginBottom: 5,
+  },
+  title: {
+    fontWeight: "bold",
+    fontSize: 18,
+  },
+  date: {
+    color: "#666",
+    marginTop: 5,
+  },
+  image: {
+    height: 160,
+    width: '100%',
+    marginTop: 5,
+  },
+});
