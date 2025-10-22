@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Layout, Input, ButtonRounded } from '../components';
+import { FlatList, Text, Image, TouchableOpacity, ActivityIndicator, StyleSheet  } from 'react-native';
 
 export default function NewScreen({ navigation }){
     const [titulo, setTitulo] = useState('');
