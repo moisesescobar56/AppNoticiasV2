@@ -27,6 +27,7 @@ export default function RegisterNewScreen({ navigation }){
             <Input 
                 label="Contenido"
                 placeholder="escribir aqui..."
+                lines={4}
                 value={contenido}
                 onChangeText={setContenido} />
 
