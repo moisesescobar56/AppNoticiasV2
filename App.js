@@ -1,9 +1,6 @@
-// importar menu lateral
-import AppDrawer from './navigation/AppDrawer';
-import AppTabs from './navigation/AppTabs';
-
 // importar screens que no se usan en el menu lateral
 import NewScreen from './screens/NewScreen';
+import RegisterNewScreen from './screens/RegisterNewScreen';
 import ViewNewScreen from './screens/ViewNewScreen';
 
 // importar react navigation
@@ -18,8 +15,8 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator  >
-        <Stack.Screen name="Home" component={AppTabs} options={{ headerShown: false }} />
         <Stack.Screen name="New" component={NewScreen} options={{ title: "Noticias" }}  />
+        <Stack.Screen name="RegisterNew" component={RegisterNewScreen} options={{ title:"Registrar noticia" }} />
         <Stack.Screen name="ViewNew" component={ViewNewScreen} options={{ title: "Ver Noticia" }}  />
       </Stack.Navigator>
     </NavigationContainer>
