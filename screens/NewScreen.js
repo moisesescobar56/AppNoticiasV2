@@ -1,14 +1,49 @@
 import { useState, useEffect } from 'react';
-import { Layout, Input, ButtonRounded } from '../components';
+import { Layout, Input, ButtonRounded, SearchBar } from '../components';
 import { FlatList, Text, Image, TouchableOpacity, ActivityIndicator, StyleSheet  } from 'react-native';
+import { obtenerNoticias, formatDate } from '../services/newService';
 
 export default function NewScreen({ navigation }){
     const [titulo, setTitulo] = useState('');
+    const [loading, setLoading] = useState(true);
+    const [datos, setDatos] = useState([]);
+
+    async function buscar() {
+        try {
+            const lista = await obtenerNoticias(titulo);
+            setDatos(lista); // cargar noticias
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    useEffect(() => {
+        buscar();
+    },[datos]);
+
+    function renderItem({ item }){
+        return (
+            <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('ViewNew', { noticia: item })} >
+                <Image style={styles.image} source={{uri: item.imagenUrl}} />
+                <Text style={styles.title}>{item.titulo}</Text>
+                <Text style={styles.date}>{formatDate(item.fechaHora)}</Text>
+            </TouchableOpacity>
+        );
+    }
+
+    if (loading) return <ActivityIndicator style={{ flex: 1 }} />;
 
     return (
         <Layout>
             <ButtonRounded title="Agregar noticia" onPress={() => navigation.navigate('RegisterNew')} />
-
+            <FlatList
+                data={datos}
+                renderItem={renderItem}
+                keyExtractor={(x) => x.id}
+                ListHeaderComponent={ <SearchBar text={titulo} setText={setTitulo} onSearch={ buscar } /> }
+            />
         </Layout>
     );
 }

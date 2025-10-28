@@ -1,13 +1,28 @@
 import { useState, useEffect } from 'react';
 import { Layout, Input, ButtonRounded } from '../components';
+import { agregarNoticia } from '../services/newService';
+import { Alert } from 'react-native';
 
 export default function RegisterNewScreen({ navigation }){
     const [titulo, setTitulo] = useState('');
     const [imagenUrl, setImagenUrl] = useState('');
     const [contenido, setContenido] = useState('');
 
-    function guardar(){
+    async function guardar(){
+        //validar
+        if (!titulo || !imagenUrl || !contenido) {
+          Alert.alert( "Error", "Por favor, completa todos los campos obligatorios." );
+          return;
+        }
 
+        // guardar noticia
+        await agregarNoticia({
+            titulo: titulo,
+            imagenUrl: imagenUrl,
+            contenido: contenido
+        });
+
+        navigation.popToTop(); //cerrar screen
     }
 
     return (
@@ -31,7 +46,7 @@ export default function RegisterNewScreen({ navigation }){
                 value={contenido}
                 onChangeText={setContenido} />
 
-            <ButtonRounded title="Guardar" />    
+            <ButtonRounded title="Guardar" onPress={guardar} />    
             <ButtonRounded title="Cancelar" isPrimary={false} onPress={()=> navigation.popToTop()} />    
         </Layout>
     );
